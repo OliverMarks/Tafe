@@ -1,0 +1,124 @@
+.main-container {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+gap: 20px
+}
+
+.header > button {
+  height: 20px; 
+}
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  gap:50px
+}
+
+
+
+button {
+  cursor: pointer;
+  border-radius: 15px;
+}
+
+
+
+form {
+  display : flex; 
+  flex-direction: column;
+  gap: 20px; 
+  
+}
+
+form > button {
+  width : 200px
+}
+
+.form-buttons {
+  display: flex;
+  gap: 20px
+}
+
+.daily-header {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  gap: 50px;
+}
+
+.daily-header > button {
+  height: 50px;
+}
+
+input {
+  margin-left: 20px;
+  width:50px
+}
+
+.name-input {
+  width:200px; 
+}
+
+.daily-form {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.daily-employee-details {
+  display:flex;
+  gap: 10px; 
+  margin-bottom: 20px;
+  margin-top:15px
+}
+
+.form-days-message {
+  display:flex; 
+  gap:20px; 
+}
+
+.form-days {
+  display: flex;
+  flex-direction: column;
+  gap: 20px
+}
+
+
+
+.daily-message {
+  margin:0;
+  color:red; 
+}
+
+h3 {
+  color: black;
+  margin:0
+}
+
+.weekly-rep-table {
+  margin: 20px;
+  border: 2px solid black; 
+  
+}
+
+tr {
+  margin-bottom:6px; 
+  padding: 10px; 
+  border: 2px solid black; 
+
+}
+
+td {
+  text-align: center;
+  padding: 4px;
+}
+ 
