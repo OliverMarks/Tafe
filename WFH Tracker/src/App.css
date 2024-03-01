@@ -121,4 +121,25 @@ td {
   text-align: center;
   padding: 4px;
 }
+
+
+.week-report {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
  
+
+
+.weekly-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  width: 500px; 
+}
+
+
+.file-input {
+  width: 200px;
+}

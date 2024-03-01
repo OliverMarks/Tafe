@@ -1,10 +1,6 @@
 import { useState } from 'react';
 
-// types of comments to include 
 
-/* multiple 
-lines of comment 
-using comments is a programming standard */
 
 export default function DailyReport({ setActivePage, setWeeklyReport, weeklyReport}) {
  
@@ -30,6 +26,7 @@ export default function DailyReport({ setActivePage, setWeeklyReport, weeklyRepo
 
 
   const [reportsSubmitted, setReportsSubmitted] = useState(1)
+  const [submitState, setSubmitState] = useState(true)
   
 
   const handleChange = (event, key) => {
@@ -69,6 +66,7 @@ export default function DailyReport({ setActivePage, setWeeklyReport, weeklyRepo
       } else if (hours > 10) {
         dailyMessages[day] = `${messages.moreThanTen} ${day}`
       }
+      console.log(dailyMessages[day])
     })
 
      let weeklyMessage = '';
@@ -77,10 +75,13 @@ export default function DailyReport({ setActivePage, setWeeklyReport, weeklyRepo
      } else if (totalWeekHours > 40) {
        weeklyMessage = messages.moreThanForty;
      }
+     console.log(weeklyMessage);
 
     // Update state with the messages
     setDailyMessages(dailyMessages)
     setWeeklyMessage(weeklyMessage);
+
+    setSubmitState(!submitState)
 
 
     // updates weekly report state as an array of objects
@@ -127,8 +128,48 @@ export default function DailyReport({ setActivePage, setWeeklyReport, weeklyRepo
         Friday: '',
         Total: '',
       })
+      setSubmitState(!submitState)
     setReportsSubmitted(prevSubmitted => prevSubmitted +1)
   }
+
+  function generateWeeklyStatements(weeklyReport) {
+    let less = 0
+    let more = 0
+    let right = 0
+
+    weeklyReport.forEach((weekData) => {
+        const values = Object.values(weekData.data);
+        if (values < 30) {
+            less++
+        } else if (values > 40) {
+            more++
+        } else if (values >= 37 && values <= 39) {
+            right++
+        }
+    });
+
+    return <>
+            <p>The number of employees who worked less than 30 hours a week = {less} </p>
+            <p> The number of employees who worked more than 40 hours a week = {more} </p>
+            <p>The number of employees who worked between 37-39 hours = {right}</p>
+            </>
+  }
+
+const handleWriteToFile = () => {
+  const fileData = JSON.stringify(writeReport)
+  const blob = new Blob([fileData], { type: "text/plain" })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement("a")
+  link.download = "user-info.txt"
+  link.href = url
+  link.click()
+}
+
+
+
+
+
+
 
 
   return (
@@ -142,21 +183,25 @@ export default function DailyReport({ setActivePage, setWeeklyReport, weeklyRepo
         <table className="weekly-rep-table">
           <tr>
             <th>Employee Number</th>
-            {/* Loop through the weeklyReport to create the top row */}
+            {/* Loop through the weeklyReport to create the top row 
+                Loop through the weeklyReport to create the second row */}
             {weeklyReport.map((weekData) => (
               <th key={weekData.weekNumber}>{Object.keys(weekData.data).join(', ')}</th>
             ))}
           </tr>
           <tr>
             <td>Total Hours</td>
-            {/* Loop through the weeklyReport to create the second row */}
             {weeklyReport.map((weekData) => (
               <td key={weekData.weekNumber}>{Object.values(weekData.data).join(', ')}</td>
             ))}
           </tr>
       </table>
 
-        <button>Download Weekly Report</button>
+              {generateWeeklyStatements(weeklyReport)}
+
+
+              {/* Button should create text file of employee record */}
+        <button onClick={handleWriteToFile}>Download Employee Record for the Week </button>
 
     </div>
     
@@ -258,7 +303,8 @@ export default function DailyReport({ setActivePage, setWeeklyReport, weeklyRepo
           </div>
 
           <div className="daily-message">
-            <h3>Employee Summary:</h3>
+            <h3>Employee Summary</h3>
+          {employee.Total ?  <h3>Total hours worked: {employee.Total}</h3> : null}
         {Object.entries(dailyMessages).map(([day, message]) => (
           <p key={day}>{message}</p>
         ))}
@@ -268,8 +314,8 @@ export default function DailyReport({ setActivePage, setWeeklyReport, weeklyRepo
 
       </div>
             <div className='form-buttons'>
-          <button type="submit" onSubmit={handleSubmit}>Submit & Generate Report for Employee</button>
-          <button onClick={handleNextEmployeeReport}>Enter Data for Next Employee</button>
+          <button type="submit" onSubmit={handleSubmit} disabled = {!submitState ? true : false} >Submit & Generate Report for Employee</button>
+          <button onClick={handleNextEmployeeReport} disabled = {submitState ? true : false} >Enter Data for Next Employee</button>
             </div>
         </form>
       </div>

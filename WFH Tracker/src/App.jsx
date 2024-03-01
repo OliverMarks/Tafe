@@ -15,6 +15,8 @@ function App() {
     setActivePage(page);
   }
 
+  
+
   return (
     <div className="main-container">
     <div className='header'>
